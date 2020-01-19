@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-const App: React.FC = () => {
+import Index from "./components/Index/Index";
+import Login from "./components/Login/Login";
+import SignUp from "./components/SignUp/SignUp";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* index */}
+      <Route exact path="/" component={Index}></Route>
+      {/* login */}
+      <Route path="/login" component={Login}></Route>
+      {/* signUp */}
+      <Route path="/signUp" component={SignUp}></Route>
+    </Router>
   );
-}
+};
 
 export default App;
