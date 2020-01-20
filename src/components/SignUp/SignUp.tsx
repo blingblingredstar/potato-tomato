@@ -28,7 +28,8 @@ const SignUp = (props: RouteChildrenProps) => {
         password,
         password_confirmation: passwordConfirmation
       });
-      console.log("注册成功");
+
+      props.history.push("/");
     } catch (error) {
       console.error("提交注册用户密码失败");
     }
@@ -37,22 +38,26 @@ const SignUp = (props: RouteChildrenProps) => {
   return (
     <div className="SignUp" id="SignUp">
       <h1>土豆番茄闹钟-注册</h1>
-      <Input
-        placeholder="请输入用户名"
-        prefix={<Icon type="user" />}
-        value={account}
-        onChange={onChangeAccount}
-      />
-      <Input.Password
-        placeholder="请输入密码"
-        value={password}
-        onChange={onChangePassword}
-      />
-      <Input.Password
-        placeholder="请确认密码"
-        value={passwordConfirmation}
-        onChange={onChangePasswordConfirmation}
-      />
+      <Input.Group compact={true}>
+        <Input
+          placeholder="请输入用户名"
+          prefix={<Icon type="user" />}
+          value={account}
+          onChange={onChangeAccount}
+        />
+        <Input.Password
+          placeholder="请输入密码"
+          prefix={<Icon type="lock" />}
+          value={password}
+          onChange={onChangePassword}
+        />
+        <Input.Password
+          placeholder="请确认密码"
+          prefix={<Icon type="lock" />}
+          value={passwordConfirmation}
+          onChange={onChangePasswordConfirmation}
+        />
+      </Input.Group>
       <Button block type="primary" onClick={submit}>
         注册
       </Button>
