@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import history from "./history";
 
 const appID = "HsjvVF7uMwTNhonJVu7MgwAZ";
 const appSecret = "zQYB3yzmQXW4AMvEjh36LM1j";
@@ -39,7 +39,7 @@ instance.interceptors.response.use(
   error => {
     console.error("axios add response interceptor error", error);
     if (error.response.status === 401) {
-      window.location.href = "/login";
+      history.push("/login");
     }
     return Promise.reject(error);
   }

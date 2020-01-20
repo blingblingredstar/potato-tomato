@@ -20,9 +20,6 @@ const Index = (props: RouteChildrenProps) => {
         setAccount(response.data.account || "");
       } catch (e) {
         console.error("获取用户信息失败", e);
-        // if (!response || response.status === 401) {
-        //   props.history.push("/login");
-        // }
       }
     };
 
