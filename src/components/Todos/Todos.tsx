@@ -14,6 +14,8 @@ export interface ITodo {
   description?: string;
   id?: number;
   completed?: boolean;
+  editing?: boolean;
+  deleted?: boolean;
 }
 
 const Todos = () => {
@@ -22,7 +24,7 @@ const Todos = () => {
   const addTodo = async (params: IAddTodoParams) => {
     try {
       const response = await axios.post("todos", params);
-      setTodos([response.data.resource, ...todos]);
+      setTodos([{ ...response.data.resource, editing: false }, ...todos]);
     } catch (e) {
       console.error("添加待办事项失败", e);
     }
@@ -32,9 +34,9 @@ const Todos = () => {
     try {
       const { id, ...res } = params;
       const response = await axios.put(`todos/${id}`, res);
-      const newTodos = todos.map(todo => {
+      const newTodos: ITodo[] = todos.map(todo => {
         if (todo.id === id) {
-          return response.data.resource;
+          return { ...response.data.resource, editing: false };
         }
         return todo;
       });
@@ -45,11 +47,23 @@ const Todos = () => {
     }
   };
 
+  const toggleItemEditing = (id: number | undefined) => {
+    const newTodos = todos.map(todo => {
+      return todo.id === id
+        ? { ...todo, editing: true }
+        : { ...todo, editing: false };
+    });
+    setTodos(newTodos);
+  };
+
   useEffect(() => {
     const getTodos = async () => {
       try {
         const response = await axios.get("todos");
-        setTodos(response.data.resources);
+        const newTodos = response.data.resources.map((todo: ITodo) =>
+          Object.assign({}, todo, { editing: false })
+        );
+        setTodos(newTodos);
       } catch (e) {
         console.error("获取待办事项失败", e);
       }
@@ -66,7 +80,12 @@ const Todos = () => {
       />
       <main>
         {todos.map(todo => (
-          <TodoItem key={todo.id} {...todo} update={updateTodo}></TodoItem>
+          <TodoItem
+            key={todo.id}
+            {...todo}
+            update={updateTodo}
+            toggleEditing={toggleItemEditing}
+          ></TodoItem>
         ))}
       </main>
     </div>
