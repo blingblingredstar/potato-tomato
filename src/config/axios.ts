@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
 
 const appID = "HsjvVF7uMwTNhonJVu7MgwAZ";
 const appSecret = "zQYB3yzmQXW4AMvEjh36LM1j";
@@ -27,7 +28,7 @@ instance.interceptors.request.use(
   }
 );
 
-// 添加相应拦截器
+// 添加响应拦截器
 instance.interceptors.response.use(
   response => {
     if (response.headers["x-token"]) {
@@ -37,6 +38,9 @@ instance.interceptors.response.use(
   },
   error => {
     console.error("axios add response interceptor error", error);
+    if (error.response.status === 401) {
+      window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );
