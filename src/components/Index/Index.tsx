@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { Button } from "antd";
+import { Button, Icon } from "antd";
 import { RouteChildrenProps } from "react-router-dom";
 import axios from "../../config/axios";
+
+import "./Index.scss";
+import Todos from "../Todos/Todos";
 
 const Index = (props: RouteChildrenProps) => {
   const [account, setAccount] = useState("");
@@ -27,9 +30,20 @@ const Index = (props: RouteChildrenProps) => {
   }, [account, props.history]);
 
   return (
-    <div>
-      <p>{account && `欢迎，${account}`}</p>
-      <Button onClick={logout}>注销</Button>
+    <div className="Index" id="Index">
+      <header className="header">
+        <span className="logo">LOGO</span>
+        <span className="logout">
+          {account && `欢迎，${account}`}
+          <Button onClick={logout} size="small" type="danger">
+            <Icon type="logout" />
+            登出
+          </Button>
+        </span>
+      </header>
+      <main>
+        <Todos></Todos>
+      </main>
     </div>
   );
 };
