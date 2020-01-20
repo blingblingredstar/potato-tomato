@@ -3,7 +3,11 @@ $border-radius: 4px;
 
 .Todos {
   padding: 1em;
-  margin: 1em;
+  margin: 1em 0;
   border: 1px solid $color-border;
   border-radius: $border-radius;
+  flex-basis: 48%;
+
+  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.2);
+  background: #fff;
 }

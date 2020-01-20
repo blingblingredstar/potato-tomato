@@ -1,0 +1,62 @@
+$color-border: #ddd;
+$border-radius: 4px;
+$color-hover: #f9f9f9;
+$color-editing: #fff3d2;
+$color-completed: #a9a9a9;
+
+.TodoItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid $color-border;
+  padding: 0.5em 0;
+
+  &:hover {
+    background: $color-hover;
+  }
+  &:first-child {
+    border-top: 1px solid $color-border;
+  }
+
+  &.editing {
+    background: $color-editing;
+  }
+
+  &.completed {
+    .text {
+      text-decoration: line-through;
+      color: $color-completed;
+    }
+  }
+
+  .ant-checkbox-wrapper {
+    flex-basis: 4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text {
+    flex-basis: 96%;
+  }
+
+  .editing {
+    flex-basis: 96%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    input {
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      border: none;
+      flex-basis: 94%;
+    }
+    .iconWrapper {
+      flex-basis: 6%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 0.5em;
+    }
+  }
+}

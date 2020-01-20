@@ -2,6 +2,8 @@ import React, { useState, KeyboardEvent } from "react";
 import { Input, Icon } from "antd";
 import { IAddTodoParams } from "./Todos";
 
+import "./TodoInput.scss";
+
 enum KeyCode {
   enter = 13
 }
@@ -35,7 +37,6 @@ const TodoInput = (props: ITodoInputProps) => {
 
   return (
     <div className="TodoInput">
-      TodoInput
       <Input
         placeholder="请输入待办事项"
         suffix={suffix}

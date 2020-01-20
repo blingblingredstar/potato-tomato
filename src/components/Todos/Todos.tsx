@@ -71,6 +71,10 @@ const Todos = () => {
     getTodos();
   }, []);
 
+  const unDeletedTodos = todos.filter(todo => !todo.deleted);
+  const unCompletedTodos = unDeletedTodos.filter(todo => !todo.completed);
+  const completedTodos = unDeletedTodos.filter(todo => todo.completed);
+
   return (
     <div className="Todos" id="Todos">
       <TodoInput
@@ -78,8 +82,8 @@ const Todos = () => {
           addTodo(params);
         }}
       />
-      <main>
-        {todos.map(todo => (
+      <div className="TodoList">
+        {unCompletedTodos.map(todo => (
           <TodoItem
             key={todo.id}
             {...todo}
@@ -87,7 +91,15 @@ const Todos = () => {
             toggleEditing={toggleItemEditing}
           ></TodoItem>
         ))}
-      </main>
+        {completedTodos.map(todo => (
+          <TodoItem
+            key={todo.id}
+            {...todo}
+            update={updateTodo}
+            toggleEditing={toggleItemEditing}
+          ></TodoItem>
+        ))}
+      </div>
     </div>
   );
 };

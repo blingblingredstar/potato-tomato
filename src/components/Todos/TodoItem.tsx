@@ -1,6 +1,8 @@
 import React, { useState, KeyboardEvent } from "react";
 import { ITodo } from "./Todos";
-import { Checkbox, Input, Icon } from "antd";
+import { Checkbox, Icon } from "antd";
+
+import "./TodoItem.scss";
 
 interface ITodoItemProps {
   update: (params: ITodo) => void;
@@ -24,44 +26,60 @@ const TodoItem = (props: ITodo & ITodoItemProps) => {
     }
   };
 
+  const Icons = (
+    <div className="iconWrapper">
+      <Icon
+        type="enter"
+        onClick={() => {
+          props.update({ description: editText, id: props.id });
+        }}
+      />
+      <Icon
+        type="delete"
+        theme="filled"
+        onClick={() => {
+          props.update({ deleted: true, id: props.id });
+        }}
+      />
+    </div>
+  );
+
+  const Check = (
+    <Checkbox
+      checked={props.completed}
+      onChange={e => {
+        props.update({ completed: e.target.checked, id: props.id });
+      }}
+    />
+  );
+
   const Editing = (
     <div className="editing">
-      <Input
+      <input
         value={editText}
-        onDoubleClick={toggleEditing}
         onChange={e => {
           setEditText(e.target.value);
         }}
         onKeyUp={keyUpHandler}
       />
-      <div className="iconWrapper">
-        <Icon
-          type="enter"
-          onClick={() => {
-            props.update({ description: editText, id: props.id });
-          }}
-        />
-        <Icon
-          type="delete"
-          theme="filled"
-          onClick={() => {
-            props.update({ deleted: true, id: props.id });
-          }}
-        />
-      </div>
+      {Icons}
     </div>
   );
 
-  const Text = <span onDoubleClick={toggleEditing}>{props.description}</span>;
+  const Text = (
+    <span className="text" onDoubleClick={toggleEditing}>
+      {props.description}
+    </span>
+  );
+
+  const className =
+    "TodoItem" +
+    (props.editing ? " editing" : "") +
+    (props.completed ? " completed" : "");
 
   return (
-    <div className="TodoItem">
-      <Checkbox
-        checked={props.completed}
-        onChange={e => {
-          props.update({ completed: e.target.checked, id: props.id });
-        }}
-      />
+    <div className={className}>
+      {Check}
       {props.editing ? Editing : Text}
     </div>
   );

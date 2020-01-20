@@ -8,7 +8,7 @@ $color-border: #ddd;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1em 2em;
+    padding: 1em 0;
     border-bottom: 1px solid $color-border;
 
     .logout {
@@ -16,5 +16,10 @@ $color-border: #ddd;
         margin-left: 1em;
       }
     }
+  }
+
+  > main {
+    display: flex;
+    justify-content: space-between;
   }
 }
