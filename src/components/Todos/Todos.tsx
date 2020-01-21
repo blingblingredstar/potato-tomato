@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from "react";
-import TodoInput from "./TodoInput";
+import React, { useEffect } from "react";
+import TodoInput from "../redux/containers/TodoInputContainer";
 
 import axios from "../../config/axios";
 
 import "./Todos.scss";
-import TodoItem from "./TodoItem";
+import { AxiosResponse } from "axios";
+import TodoItem from "../redux/containers/TodoItemContainers";
+
+interface IGetTodos {
+  resources: ITodo[];
+}
 
 export interface IAddTodoParams {
   description: string;
+}
+
+interface ITodosProps {
+  todos: ITodo[];
+  initTodos: (todos: ITodo[]) => {};
 }
 
 export interface ITodo {
@@ -18,58 +28,23 @@ export interface ITodo {
   deleted?: boolean;
 }
 
-const Todos = () => {
-  const [todos, setTodos] = useState((): Array<ITodo> => []);
-
-  const addTodo = async (params: IAddTodoParams) => {
-    try {
-      const response = await axios.post("todos", params);
-      setTodos([{ ...response.data.resource, editing: false }, ...todos]);
-    } catch (e) {
-      console.error("添加待办事项失败", e);
-    }
-  };
-
-  const updateTodo = async (params: ITodo) => {
-    try {
-      const { id, ...res } = params;
-      const response = await axios.put(`todos/${id}`, res);
-      const newTodos: ITodo[] = todos.map(todo => {
-        if (todo.id === id) {
-          return { ...response.data.resource, editing: false };
-        }
-        return todo;
-      });
-
-      setTodos(newTodos);
-    } catch (e) {
-      console.error("更新待办事项失败", e);
-    }
-  };
-
-  const toggleItemEditing = (id: number | undefined) => {
-    const newTodos = todos.map(todo => {
-      return todo.id === id
-        ? { ...todo, editing: true }
-        : { ...todo, editing: false };
-    });
-    setTodos(newTodos);
-  };
-
+const Todos: React.FC<ITodosProps> = props => {
+  const { todos, initTodos } = props;
   useEffect(() => {
     const getTodos = async () => {
       try {
-        const response = await axios.get("todos");
-        const newTodos = response.data.resources.map((todo: ITodo) =>
-          Object.assign({}, todo, { editing: false })
-        );
-        setTodos(newTodos);
+        const response: AxiosResponse<IGetTodos> = await axios.get("todos");
+        const newTodos: ITodo[] = response.data.resources.map(t => ({
+          ...t,
+          editing: false
+        }));
+        initTodos(newTodos);
       } catch (e) {
         console.error("获取待办事项失败", e);
       }
     };
     getTodos();
-  }, []);
+  }, [initTodos]);
 
   const unDeletedTodos = todos.filter(todo => !todo.deleted);
   const unCompletedTodos = unDeletedTodos.filter(todo => !todo.completed);
@@ -77,27 +52,13 @@ const Todos = () => {
 
   return (
     <div className="Todos" id="Todos">
-      <TodoInput
-        addTodo={params => {
-          addTodo(params);
-        }}
-      />
+      <TodoInput />
       <div className="TodoList">
         {unCompletedTodos.map(todo => (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            update={updateTodo}
-            toggleEditing={toggleItemEditing}
-          ></TodoItem>
+          <TodoItem key={todo.id} {...todo}></TodoItem>
         ))}
         {completedTodos.map(todo => (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            update={updateTodo}
-            toggleEditing={toggleItemEditing}
-          ></TodoItem>
+          <TodoItem key={todo.id} {...todo}></TodoItem>
         ))}
       </div>
     </div>

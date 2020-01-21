@@ -2,11 +2,13 @@ import React, { useState, KeyboardEvent } from "react";
 import { ITodo } from "./Todos";
 import { Checkbox, Icon } from "antd";
 
+import axios from "../../config/axios";
+
 import "./TodoItem.scss";
 
 interface ITodoItemProps {
-  update: (params: ITodo) => void;
-  toggleEditing: (params: number | undefined) => void;
+  updateTodo: (todo: ITodo) => {};
+  editTodo: (id: number) => {};
 }
 
 enum KeyCode {
@@ -17,12 +19,21 @@ const TodoItem = (props: ITodo & ITodoItemProps) => {
   const [editText, setEditText] = useState(props.description || "");
 
   const toggleEditing = () => {
-    props.toggleEditing(props.id);
+    if (props.id) props.editTodo(props.id);
   };
 
   const keyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (editText !== "" && e.keyCode === KeyCode.enter) {
-      props.update({ description: editText, id: props.id });
+      updateTodo({ description: editText, id: props.id });
+    }
+  };
+
+  const updateTodo = async (params: ITodo) => {
+    try {
+      const response = await axios.put(`todos/${props.id}`, params);
+      props.updateTodo(response.data.resource);
+    } catch (e) {
+      console.error("更新待办事项失败", e);
     }
   };
 
@@ -31,14 +42,14 @@ const TodoItem = (props: ITodo & ITodoItemProps) => {
       <Icon
         type="enter"
         onClick={() => {
-          props.update({ description: editText, id: props.id });
+          updateTodo({ description: editText, id: props.id });
         }}
       />
       <Icon
         type="delete"
         theme="filled"
         onClick={() => {
-          props.update({ deleted: true, id: props.id });
+          updateTodo({ deleted: true });
         }}
       />
     </div>
@@ -48,7 +59,7 @@ const TodoItem = (props: ITodo & ITodoItemProps) => {
     <Checkbox
       checked={props.completed}
       onChange={e => {
-        props.update({ completed: e.target.checked, id: props.id });
+        updateTodo({ completed: e.target.checked, id: props.id });
       }}
     />
   );

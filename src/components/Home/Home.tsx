@@ -4,10 +4,10 @@ import { Button, Icon } from "antd";
 import { RouteChildrenProps } from "react-router-dom";
 import axios from "../../config/axios";
 
-import "./Index.scss";
-import Todos from "../Todos/Todos";
+import "./Home.scss";
+import Todos from "../redux/containers/TodosContainers";
 
-const Index = (props: RouteChildrenProps) => {
+const Home = (props: RouteChildrenProps) => {
   const [account, setAccount] = useState("");
 
   const logout = () => {
@@ -30,7 +30,7 @@ const Index = (props: RouteChildrenProps) => {
   }, [account, props.history]);
 
   return (
-    <div className="Index" id="Index">
+    <div className="Home">
       <header className="header">
         <span className="logo">LOGO</span>
         <span className="logout">
@@ -48,4 +48,4 @@ const Index = (props: RouteChildrenProps) => {
   );
 };
 
-export default Index;
+export default Home;
