@@ -1,4 +1,9 @@
-import { ADD_TODO, INIT_TODOS, UPDATE_TODO, EDIT_TODO } from "../actionTypes";
+import {
+  ADD_TODO,
+  INIT_TODOS,
+  UPDATE_TODO,
+  EDIT_TODO
+} from "../actions/actionTypes";
 import { ITodo } from "../../Todos/Todos";
 import { Reducer } from "react";
 

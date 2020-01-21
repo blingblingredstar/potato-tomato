@@ -6,6 +6,7 @@ import axios from "../../config/axios";
 
 import "./Home.scss";
 import Todos from "../redux/containers/TodosContainers";
+import Tomatoes from "../Tomatoes/Tomatoes";
 
 const Home = (props: RouteChildrenProps) => {
   const [account, setAccount] = useState("");
@@ -42,6 +43,7 @@ const Home = (props: RouteChildrenProps) => {
         </span>
       </header>
       <main>
+        <Tomatoes></Tomatoes>
         <Todos></Todos>
       </main>
     </div>

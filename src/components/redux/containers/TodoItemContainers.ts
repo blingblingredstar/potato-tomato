@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import TodoItem from "../../Todos/TodoItem";
-import { editTodo, updateTodo } from "../actions";
+import { editTodo, updateTodo } from "../actions/todos";
 
 const mapStateToProps = (state = { todos: [] }, ownProps = {}) => {
   return { todos: state.todos, ...ownProps };

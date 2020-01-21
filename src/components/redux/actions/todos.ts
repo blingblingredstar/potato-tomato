@@ -1,5 +1,5 @@
 import { ADD_TODO, INIT_TODOS, UPDATE_TODO, EDIT_TODO } from "./actionTypes";
-import { ITodo } from "../Todos/Todos";
+import { ITodo } from "../../Todos/Todos";
 
 export const addTodo = (todo: ITodo) => {
   return {
