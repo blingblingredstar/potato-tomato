@@ -6,7 +6,7 @@ import axios from "../../config/axios";
 
 import "./Home.scss";
 import Todos from "../redux/containers/TodosContainers";
-import Tomatoes from "../Tomatoes/Tomatoes";
+import Tomatoes from "../redux/containers/TomatoesContainers";
 
 const Home = (props: RouteChildrenProps) => {
   const [account, setAccount] = useState("");

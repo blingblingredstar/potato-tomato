@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Tomatoes from "../../Tomatoes/Tomatoes";
+import { addTomato, initTomatoes, updateTomato } from "../actions/tomatoes";
 
 const mapStateToProps = (state = { tomatoes: [] }, ownProps = {}) => {
   return {
@@ -8,4 +9,10 @@ const mapStateToProps = (state = { tomatoes: [] }, ownProps = {}) => {
   };
 };
 
-export default connect(mapStateToProps)(Tomatoes);
+const mapDispatchToProps = {
+  addTomato,
+  initTomatoes,
+  updateTomato
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tomatoes);

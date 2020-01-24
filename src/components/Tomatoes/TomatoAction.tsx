@@ -1,44 +1,95 @@
-import React from "react";
-import { Button } from "antd";
+import React, { useState } from "react";
+import { ITomato } from "./Tomatoes";
+import CountDown from "./CountDown";
+import StartTomato from "./StartTomato";
+import InputDescription from "./InputDescription";
+import { Icon, Modal } from "antd";
 
 import axios from "../../config/axios";
 
-enum Tomatoes {
-  duration = 25 * 60 * 1000
+import "./TomatoAction.scss";
+
+interface ITomatoActionProps {
+  unfinishedTomato: ITomato;
+  updateTomato: (tomato: ITomato) => void;
+  startTomato: () => void;
 }
 
-interface ITomato {
-  aborted?: boolean;
-  created_at?: string;
-  description?: string;
-  duration?: number;
-  ended_at?: number;
-  extra?: object;
-  id?: number;
-  manually_created?: string;
-  started_at?: string;
-  updated_at?: string;
-  user_id?: number;
-}
+const TomatoAction: React.FC<ITomato & ITomatoActionProps> = props => {
+  const { unfinishedTomato, updateTomato, startTomato } = props;
+  const [hasFinished, setHasFinished] = useState(false);
 
-const TomatoAction: React.FC = () => {
-  const startTomato = async () => {
-    try {
-      const response = await axios.post("tomatoes", {
-        duration: Tomatoes.duration
+  let content = <div />;
+
+  if (!unfinishedTomato) {
+    content = <StartTomato startTomato={startTomato}></StartTomato>;
+  } else {
+    const start_at = Date.parse(unfinishedTomato.started_at || "");
+    const duration = unfinishedTomato.duration || 0;
+    const finishedTime = duration + start_at;
+    const timeNow = new Date().getTime();
+
+    const showAbortConfirm = () => {
+      return Modal.confirm({
+        title: "您目前正在一个番茄工作时间中，要放弃这个番茄吗？",
+        okText: "放弃次番茄",
+        okType: "danger",
+        cancelText: "继续番茄任务",
+        onOk() {
+          abortTomato();
+        }
       });
-      console.log(response.data);
-    } catch (e) {
-      console.error("更新番茄闹钟失败", e);
-    }
-  };
+    };
 
-  return (
-    <div className="TomatoAction">
-      TomatoAction
-      <Button onClick={startTomato}>开始番茄</Button>
-    </div>
-  );
+    const abortTomato = async () => {
+      try {
+        const response = await axios.put(`tomatoes/${unfinishedTomato.id}`, {
+          aborted: true
+        });
+        updateTomato(response.data.resource);
+        document.title = `番茄土豆`;
+      } catch (e) {
+        console.error("放弃番茄任务失败", e);
+      }
+    };
+
+    if (timeNow - finishedTime > 0 || hasFinished) {
+      content = (
+        <div className="InputWrapper">
+          <InputDescription
+            unfinishedTomato={unfinishedTomato}
+            updateTomato={updateTomato}
+          />
+          <Icon
+            type="close-circle"
+            className="abort"
+            onClick={showAbortConfirm}
+          />
+        </div>
+      );
+    } else {
+      const updateHasFinished = () => {
+        setHasFinished(true);
+      };
+
+      content = (
+        <div className="CountDownWrapper">
+          <CountDown
+            duration={duration}
+            finishedTime={finishedTime}
+            updateHasFinished={updateHasFinished}
+          />
+          <Icon
+            type="close-circle"
+            className="abort"
+            onClick={showAbortConfirm}
+          />
+        </div>
+      );
+    }
+  }
+
+  return <div className="TomatoAction">{content}</div>;
 };
 
 export default TomatoAction;

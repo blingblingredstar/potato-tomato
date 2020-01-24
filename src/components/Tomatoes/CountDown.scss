@@ -1,0 +1,26 @@
+$color-border: #ddd;
+$border-radius: 4px;
+
+.CountDown {
+  position: relative;
+  padding: 4px 0;
+  text-align: center;
+  border: 1px solid $color-border;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  > span {
+    position: relative;
+    z-index: 1;
+  }
+
+  > .progress {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: #eee;
+    z-index: 0;
+    box-shadow: 1px 0 0 0 rgba($color: rgb(224, 224, 224), $alpha: 1);
+  }
+}

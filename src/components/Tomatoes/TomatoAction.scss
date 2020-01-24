@@ -1,0 +1,13 @@
+.TomatoAction {
+}
+
+.CountDownWrapper,
+.InputWrapper {
+  position: relative;
+}
+.abort {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2%;
+}
