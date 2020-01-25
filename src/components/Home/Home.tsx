@@ -8,6 +8,7 @@ import "./Home.scss";
 import Todos from "../redux/containers/TodosContainers";
 import Tomatoes from "../redux/containers/TomatoesContainers";
 import Logo from "./Logo";
+import Statistics from "../redux/containers/StatisticsContainer";
 
 const Home = (props: RouteChildrenProps) => {
   const [account, setAccount] = useState("");
@@ -47,6 +48,7 @@ const Home = (props: RouteChildrenProps) => {
         <Tomatoes></Tomatoes>
         <Todos></Todos>
       </main>
+      <Statistics />
     </div>
   );
 };
