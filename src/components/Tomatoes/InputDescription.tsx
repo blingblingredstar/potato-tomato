@@ -1,5 +1,5 @@
 import React, { KeyboardEvent, useState } from "react";
-import { Input, Icon } from "antd";
+import { Input } from "antd";
 import { ITomato } from "./Tomatoes";
 import axios from "../../config/axios";
 

@@ -3,6 +3,10 @@ import axios from "../../config/axios";
 
 import "./Tomatoes.scss";
 import TomatoAction from "./TomatoAction";
+import TomatoList from "./TomatoList";
+
+import { groupBy } from "lodash";
+import { format } from "date-fns";
 
 enum ETomatoes {
   duration = 25 * 60 * 1000
@@ -48,6 +52,15 @@ const Tomatoes: React.FC<ITomatoesProps> = props => {
       tomato => !tomato.description && !tomato.ended_at && !tomato.aborted
     )[0];
 
+  const finishedTomatoes = () => {
+    const finishedTomatoes = tomatoes.filter(
+      tomato => tomato.description && tomato.ended_at && !tomato.aborted
+    );
+    const obj = groupBy(finishedTomatoes, tomato => {
+      return format(new Date(tomato.started_at || 0), "yyyy-MM-dd");
+    });
+    return obj;
+  };
   useEffect(() => {
     const getTomatoes = async () => {
       try {
@@ -66,7 +79,8 @@ const Tomatoes: React.FC<ITomatoesProps> = props => {
         startTomato={startTomato}
         unfinishedTomato={unfinishedTomato()}
         updateTomato={updateTomato}
-      ></TomatoAction>
+      />
+      <TomatoList finishedTomatoes={finishedTomatoes()} />
     </div>
   );
 };

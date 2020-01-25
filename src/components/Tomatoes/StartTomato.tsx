@@ -9,6 +9,7 @@ const StartTomato: React.FC<IStartTomatoProps> = props => {
   const { startTomato } = props;
   return (
     <Button
+      block
       onClick={() => {
         startTomato();
       }}

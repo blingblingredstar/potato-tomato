@@ -7,6 +7,7 @@ import axios from "../../config/axios";
 import "./Home.scss";
 import Todos from "../redux/containers/TodosContainers";
 import Tomatoes from "../redux/containers/TomatoesContainers";
+import Logo from "./Logo";
 
 const Home = (props: RouteChildrenProps) => {
   const [account, setAccount] = useState("");
@@ -33,7 +34,7 @@ const Home = (props: RouteChildrenProps) => {
   return (
     <div className="Home">
       <header className="header">
-        <span className="logo">LOGO</span>
+        <Logo />
         <span className="logout">
           {account && `欢迎，${account}`}
           <Button onClick={logout} size="small" type="danger">

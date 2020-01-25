@@ -1,0 +1,23 @@
+.TomatoList {
+  max-height: 500px;
+  overflow-y: scroll;
+
+  scrollbar-width: none;
+
+  .title {
+    margin-top: 1em;
+    border-top: 1px solid #ddd;
+    padding: 0.6em 0;
+    display: flex;
+    justify-content: space-between;
+
+    .date {
+      color: #999;
+      font-size: 16px;
+    }
+    .count {
+      color: #666;
+      font-size: 14px;
+    }
+  }
+}
