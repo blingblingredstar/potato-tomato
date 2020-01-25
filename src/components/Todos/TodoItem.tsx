@@ -59,7 +59,11 @@ const TodoItem = (props: ITodo & ITodoItemProps) => {
     <Checkbox
       checked={props.completed}
       onChange={e => {
-        updateTodo({ completed: e.target.checked, id: props.id });
+        updateTodo({
+          completed: e.target.checked,
+          id: props.id,
+          completed_at: new Date().toUTCString()
+        });
       }}
     />
   );

@@ -26,6 +26,7 @@ export interface ITodo {
   completed?: boolean;
   editing?: boolean;
   deleted?: boolean;
+  completed_at?: string;
 }
 
 const Todos: React.FC<ITodosProps> = props => {
@@ -48,16 +49,12 @@ const Todos: React.FC<ITodosProps> = props => {
 
   const unDeletedTodos = todos.filter(todo => !todo.deleted);
   const unCompletedTodos = unDeletedTodos.filter(todo => !todo.completed);
-  const completedTodos = unDeletedTodos.filter(todo => todo.completed);
 
   return (
     <div className="Todos" id="Todos">
       <TodoInput />
       <div className="TodoList">
         {unCompletedTodos.map(todo => (
-          <TodoItem key={todo.id} {...todo}></TodoItem>
-        ))}
-        {completedTodos.map(todo => (
           <TodoItem key={todo.id} {...todo}></TodoItem>
         ))}
       </div>
