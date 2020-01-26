@@ -5,7 +5,9 @@
   margin: 8px 0;
 
   display: flex;
-
+  p {
+    margin-bottom: 0.2em;
+  }
   .summary {
     flex-basis: 20%;
     .date {

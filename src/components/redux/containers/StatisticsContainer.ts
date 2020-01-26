@@ -1,9 +1,13 @@
 import { connect } from "react-redux";
 import Statistics from "../../Statistics/Statistics";
 
-const mapStateToProps = (state = { todos: [] }, ownProps = {}) => {
+const mapStateToProps = (
+  state = { todos: [], tomatoes: [] },
+  ownProps = {}
+) => {
   return {
     todos: state.todos,
+    tomatoes: state.tomatoes,
     ...ownProps
   };
 };
