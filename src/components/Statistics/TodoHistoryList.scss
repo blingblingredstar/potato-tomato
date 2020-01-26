@@ -1,0 +1,27 @@
+.TodoHistoryList {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 8px 0;
+
+  display: flex;
+
+  .summary {
+    flex-basis: 20%;
+    .date {
+      span {
+        color: #bbb;
+        &:first-child {
+          color: #333;
+          margin-right: 1em;
+        }
+      }
+    }
+    .finishedCount {
+      color: #bbb;
+    }
+  }
+  .content {
+    flex: 1;
+  }
+}

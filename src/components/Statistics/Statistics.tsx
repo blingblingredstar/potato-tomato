@@ -5,6 +5,7 @@ import { ITodo } from "../Todos/Todos";
 import Polygon from "./Polygon";
 import { groupBy } from "lodash";
 import { format } from "date-fns";
+import TodoHistoryContainer from "../redux/containers/TodoHistoryContainer";
 
 interface IStatisticsProps {
   todos: ITodo[];
@@ -16,7 +17,6 @@ const Statistics: React.FC<IStatisticsProps> = ({ todos }) => {
   const dailyTodos = groupBy(finishedTodos, todo =>
     format(new Date(todo.completed_at || 0), "yyyy-MM-dd")
   );
-  console.log(dailyTodos);
 
   return (
     <div className="Statistics">
@@ -32,6 +32,7 @@ const Statistics: React.FC<IStatisticsProps> = ({ todos }) => {
           />
         </li>
       </ul>
+      <TodoHistoryContainer />
     </div>
   );
 };

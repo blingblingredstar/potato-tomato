@@ -27,6 +27,8 @@ export interface ITodo {
   editing?: boolean;
   deleted?: boolean;
   completed_at?: string;
+  updated_at?: number;
+  finished?: boolean;
 }
 
 const Todos: React.FC<ITodosProps> = props => {

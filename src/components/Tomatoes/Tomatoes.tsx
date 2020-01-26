@@ -47,20 +47,19 @@ const Tomatoes: React.FC<ITomatoesProps> = props => {
     }
   };
 
-  const unfinishedTomato = () =>
-    tomatoes.filter(
-      tomato => !tomato.description && !tomato.ended_at && !tomato.aborted
-    )[0];
+  const unfinishedTomato = tomatoes.filter(
+    tomato => !tomato.description && !tomato.ended_at && !tomato.aborted
+  )[0];
 
-  const finishedTomatoes = () => {
-    const finishedTomatoes = tomatoes.filter(
+  const finishedTomatoes = groupBy(
+    tomatoes.filter(
       tomato => tomato.description && tomato.ended_at && !tomato.aborted
-    );
-    const obj = groupBy(finishedTomatoes, tomato => {
+    ),
+    tomato => {
       return format(new Date(tomato.started_at || 0), "yyyy-MM-dd");
-    });
-    return obj;
-  };
+    }
+  );
+
   useEffect(() => {
     const getTomatoes = async () => {
       try {
@@ -77,10 +76,10 @@ const Tomatoes: React.FC<ITomatoesProps> = props => {
     <div className="Tomatoes">
       <TomatoAction
         startTomato={startTomato}
-        unfinishedTomato={unfinishedTomato()}
+        unfinishedTomato={unfinishedTomato}
         updateTomato={updateTomato}
       />
-      <TomatoList finishedTomatoes={finishedTomatoes()} />
+      <TomatoList finishedTomatoes={finishedTomatoes} />
     </div>
   );
 };

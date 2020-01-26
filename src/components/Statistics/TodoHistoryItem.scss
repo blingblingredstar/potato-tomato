@@ -1,0 +1,35 @@
+.TodoHistoryItem {
+  padding: 8px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+
+  &:hover {
+    background: #f4f4f4;
+  }
+
+  &:hover {
+    .action {
+      display: block;
+    }
+  }
+
+  .text {
+    span {
+      &:first-child {
+        color: #bbb;
+        margin-right: 1em;
+      }
+    }
+  }
+  .action {
+    display: none;
+    span {
+      color: rgb(24, 144, 255);
+      cursor: pointer;
+      &:first-child {
+        margin-right: 1em;
+      }
+    }
+  }
+}
