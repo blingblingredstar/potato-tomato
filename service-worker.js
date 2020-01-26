@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/potato-tomato/precache-manifest.79f997a5c2b3f32118f132b47cf97211.js"
+  "/potato-tomato/precache-manifest.e4cb2432297e599545e2dd6c552a5d68.js"
 );
 
 self.addEventListener('message', (event) => {
